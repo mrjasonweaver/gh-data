@@ -7,17 +7,20 @@ import { map, filter, mergeMap, debounceTime } from 'rxjs/operators';
 @Injectable()
 export class UiStateStore {
 
+  initialEvent = { target: { value: ''} };
+
+  private _route: BehaviorSubject<any> = new BehaviorSubject('');
   private _isSelected = false;
   private _uiState: BehaviorSubject<any> = new BehaviorSubject(initialUiState);
-  public readonly uiState: Observable<IUiState> = this._uiState;
   private _routeQueryParams: Observable<ParamMap>;
-  private _route;
-  initialEvent = { target: { value: ''} };
   private _eventStream: BehaviorSubject<any> = new BehaviorSubject(this.initialEvent);
-  public eventStream: Observable<string> = this._eventStream.pipe(
+
+  eventStream: Observable<string> = this._eventStream.pipe(
     debounceTime(300),
     map(e => e.target.value)
   );
+
+  readonly uiState: Observable<IUiState> = this._uiState;
 
   constructor(private r: ActivatedRoute, private router: Router) {
 
@@ -29,7 +32,7 @@ export class UiStateStore {
       map(rt => rt.firstChild),
       filter(rt => rt.outlet === 'primary'),
       mergeMap(rt => rt.data)
-    ).subscribe(x => this._route = x);
+    ).subscribe(x => this._route.next(x));
 
     this.isSelected();
 
@@ -38,7 +41,7 @@ export class UiStateStore {
   get routeQueryParams$() {
     return this._routeQueryParams;
   }
-  get route$() {
+  get currentRoute$() {
     return this._route;
   }
   get uiState$() {

@@ -54,7 +54,7 @@ export const mockIssuesObject: IIssuesObject = {
       body: 'This is an issue',
       user: {
         login: 'bobby1',
-        type: "User"
+        type: 'User'
       },
       created_at: '2018-05-09T14:39:24Z'
     }, {
@@ -66,7 +66,7 @@ export const mockIssuesObject: IIssuesObject = {
       body: 'This is an issue2',
       user: {
         login: 'bobby2',
-        type: "User"
+        type: 'User'
       },
       created_at: '2018-05-09T14:40:24Z'
     }

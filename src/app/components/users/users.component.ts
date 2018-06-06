@@ -21,10 +21,6 @@ export class UsersComponent implements OnInit {
 
   ngOnInit() {
     this.uiStateStore.routeQueryParams$.subscribe(x => this.routeQueryParams = x);
-    this.uiStateStore.inputValue$.subscribe(x => {
-      this.searchTerm = x;
-      if (this.searchTerm) { this.onSearchChange(); }
-    });
   }
 
   onPageChange(event) {
@@ -37,11 +33,6 @@ export class UsersComponent implements OnInit {
     const { active: sort, direction: order } = event;
     const { page, searchTerm } = this.routeQueryParams.params;
     return this.router.navigate(['/users'], { queryParams: { sort, order, page, searchTerm } });
-  }
-
-  onSearchChange() {
-    const { sort, order, page } = this.routeQueryParams.params;
-    return this.router.navigate(['/users'], { queryParams: { sort, order, page, searchTerm: this.searchTerm } });
   }
 
   onSelect(value: string) {
