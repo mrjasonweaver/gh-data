@@ -30,7 +30,7 @@
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let user"> 
           <mat-icon *ngIf="+routeQueryParams.params.selected === user.id" color="accent">check_box</mat-icon>
-          <mat-icon *ngIf="+routeQueryParams.params.selected !== user.id">check_box_outline_blank</mat-icon>
+          <mat-icon *ngIf="+routeQueryParams.params.selected !== user.id" class="ckbx-outline">check_box_outline_blank</mat-icon>
         </mat-cell>
       </ng-container>
       

@@ -137,3 +137,6 @@ nav a:hover, nav .active {
   margin-top: 0;
   padding: 0;
 }
+.ckbx-outline {
+  color: #ccc;
+}
