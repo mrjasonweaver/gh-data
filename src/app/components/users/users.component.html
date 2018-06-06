@@ -1,0 +1,92 @@
+<mat-sidenav-container class="app-container" *ngIf="(uiStateStore.routeQueryParams$ | async) as routeQueryParams">
+
+  <mat-sidenav *ngIf="(uiStateStore.uiState$ | async) as uiState" fixedInViewport="'true'" fixedTopGap="64" position="end" mode="side" [opened]="uiState.isSelected">
+    <mat-icon class="close-panel-icon" (click)="onSidenavClose()">close</mat-icon>
+    <div fxLayout="column" fxLayoutAlign="center center">
+      <div class="panel-icon">
+        <mat-icon color="primary">person</mat-icon>
+      </div>
+      <h3 class="panel-heading">User</h3>
+    </div>
+    <mat-divider></mat-divider>
+    <div *ngIf="(usersStore.userSelected$ | async) as userSelected">
+      <ul>
+        <li>{{userSelected.login}}</li>
+        <li>{{userSelected.type}}</li>
+        <li>{{userSelected.score}}</li>
+        <li>{{userSelected.site_admin}}</li>
+      </ul>
+    </div>
+  </mat-sidenav>
+
+  <mat-card *ngIf="(uiStateStore.uiState$ | async) as uiState" class="container">
+    <mat-card-header fxLayout="row" fxLayoutAlign="start start">
+      <app-debounce-obs-input
+      [inputLabel]="'Search Users'"
+      [searchTerm]="routeQueryParams.params.searchTerm">
+      </app-debounce-obs-input>
+
+      <span fxFlex></span>
+      <mat-paginator *ngIf="(usersStore.usersCount$ | async) as usersCount"
+        (page)="onPageChange($event)"
+        [length]="usersCount"
+        [pageIndex]="routeQueryParams.params.page - 1"
+        [pageSize]="'10'">
+      </mat-paginator>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+    <mat-table
+      #table
+      matSort
+      (matSortChange)="onSortData($event)"
+      [dataSource]="users"
+      *ngIf="(usersStore.users$ | async) as users">
+
+      <ng-container matColumnDef="checkbox">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let user"> 
+          <mat-icon *ngIf="+routeQueryParams.params.selected === user.id" color="accent">check_box</mat-icon>
+          <mat-icon *ngIf="+routeQueryParams.params.selected !== user.id">check_box_outline_blank</mat-icon>
+        </mat-cell>
+      </ng-container>
+      
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+        <mat-cell *matCellDef="let user"> {{ user.id }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="login">
+        <mat-header-cell *matHeaderCellDef> Username </mat-header-cell>
+        <mat-cell *matCellDef="let user"> {{ user.login }} </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="type">
+        <mat-header-cell *matHeaderCellDef> Type </mat-header-cell>
+        <mat-cell *matCellDef="let user"> {{ user.type}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="score">
+        <mat-header-cell *matHeaderCellDef> Score </mat-header-cell>
+        <mat-cell *matCellDef="let user"> {{ user.score }} </mat-cell>
+      </ng-container>
+
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row
+        *matRowDef="let row; columns: displayedColumns;"
+        (click)="onSelect(row.id)"
+        [ngClass]="{'loading' : uiState.actionOngoing, 'selected' : +routeQueryParams.params.selected === row.id}">
+      </mat-row>
+  
+    </mat-table>
+    </mat-card-content>
+    <mat-paginator *ngIf="(usersStore.usersCount$ | async) as usersCount"
+      (page)="onPageChange($event)"
+      [length]="usersCount"
+      [pageIndex]="routeQueryParams.params.page - 1"
+      [pageSize]="'10'">
+    </mat-paginator>
+  </mat-card>
+  
+</mat-sidenav-container>

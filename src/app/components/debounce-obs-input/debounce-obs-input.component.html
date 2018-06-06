@@ -1,0 +1,11 @@
+<form class="search-users">
+  <mat-form-field appearance="outline" floatLabel="always">
+    <mat-label>{{ inputLabel }}</mat-label>
+    <input
+      #searchBox
+      matInput
+      [ngModelOptions]="{standalone: true}"
+      [(ngModel)]="searchTerm"
+      (keyup)="onValueChange($event)">
+  </mat-form-field>
+</form>

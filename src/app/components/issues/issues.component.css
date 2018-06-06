@@ -1,0 +1,29 @@
+.mat-column-number,
+.mat-column-comments {
+  max-width: 80px;
+}
+.mat-column-created {
+  max-width: 100px;
+}
+.mat-column-comments {
+  text-align: center;
+}
+.mat-column-user,
+.mat-column-type {
+  max-width: 140px;
+}
+.mat-column-title {
+  padding-right: 30px;
+}
+.mat-card {
+  margin-bottom: 30px;
+}
+.mat-progress-bar {
+  position: fixed;
+  width: 100%;
+  left: 0;
+  top: 0;
+}
+.loading {
+  opacity: 0.4;
+}

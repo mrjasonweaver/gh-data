@@ -1,0 +1,23 @@
+.mat-column-number,
+.mat-column-comments,
+.mat-column-checkbox {
+  max-width: 80px;
+}
+.mat-column-created {
+  max-width: 100px;
+}
+.mat-column-comments {
+  text-align: center;
+}
+.mat-column-user {
+  max-width: 140px;
+}
+.mat-column-title {
+  padding-right: 30px;
+}
+.mat-card {
+  margin-bottom: 30px;
+}
+.mat-card-content {
+  margin: 0 -24px;
+}

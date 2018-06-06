@@ -1,1 +1,50 @@
-/* You can add global styles to this file, and also import other style files */
+html, .mat-drawer-container { background: #eff2f7; }
+body { margin: 0; }
+.app-container { padding: 0.1px; }
+.container {
+  margin: 40px;
+}
+.container:before, .container:after{
+  content: ' ';
+  display: table;
+}
+.mat-form-field-appearance-outline .mat-form-field-infix,
+.mat-form-field-appearance-fill .mat-form-field-infix {
+  padding: .2em 0 .5em 0;
+}
+.loading {
+  opacity: 0.4;
+}
+.mat-row:hover.selected, .mat-row.selected {
+  background: rgba(0, 255, 213, 0.1);
+}
+.mat-drawer {
+  width: 400px;
+  border-left: 1px solid rgba(0,0,0,.1);
+}
+.mat-drawer > div {
+  padding: 40px;
+}
+.mat-drawer > div:first-of-type {
+  padding: 20px 40px;
+}
+.close-panel-icon {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+.panel-icon {
+  width: 36px;
+}
+.panel-icon .mat-icon {
+  font-size: 36px;
+}
+.panel-heading {
+  font-size: 18px;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+.mat-row:hover {
+  background-color: #f6f6f6;
+  cursor: pointer;
+}
