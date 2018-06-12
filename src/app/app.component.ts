@@ -23,7 +23,6 @@ import {
           }),
           { optional: true }),
 
-        // move page off screen up on leave
         query(':leave',
           animate('50ms ease',
             style({
@@ -35,7 +34,6 @@ import {
           ),
         { optional: true }),
 
-        // move page in screen from bottom to top
         query(':enter',
           animate('200ms ease',
             style({

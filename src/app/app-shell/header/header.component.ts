@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit {
     this.uiStateStore.routeQueryParams$.subscribe(qp => this.routeQueryParams = qp);
     this.uiStateStore.inputValue$.subscribe(iv => {
       this.searchTerm = iv;
-      return this.onSearchChange();
+      return this.searchTerm ? this.onSearchChange() : null;
     });
     this.uiStateStore.currentRoute$.subscribe(cr => cr ? this.currentRoute = cr.title.toLowerCase() : null);
   }

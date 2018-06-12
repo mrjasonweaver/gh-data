@@ -24,6 +24,7 @@ import { UsersService } from './services/users/users.service';
 import { UsersStore } from './store/users';
 import { DebounceObsInputComponent } from './components/debounce-obs-input/debounce-obs-input.component';
 import { CacheService } from './services/cache.service';
+import { LoginComponent } from './components/login/login.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { CacheService } from './services/cache.service';
     IssuesComponent,
     UsersComponent,
     OrganizationsComponent,
-    DebounceObsInputComponent
+    DebounceObsInputComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -90,6 +92,12 @@ import { CacheService } from './services/cache.service';
         pathMatch: 'full',
         component: OrganizationsComponent,
         data: { animation: 'organizations', title: 'Organizations', icon: 'group_work' }
+      },
+      {
+        path: 'login',
+        pathMatch: 'full',
+        component: LoginComponent,
+        data: { animation: 'login', title: 'login', icon: 'fingerprint' }
       }
     ], { useHash: false }),
   ],

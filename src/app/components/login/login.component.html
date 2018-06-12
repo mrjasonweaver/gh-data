@@ -1,0 +1,21 @@
+<div class="app-container">
+  <div class="container" fxLayout="column" fxLayoutAlign="space-around center">
+    <div fxLayout="row wrap" fxLayoutAlign="space-around center">
+      <mat-card>
+        <mat-card-content>
+          <form>
+            <mat-form-field appearance="outline">
+              <mat-label>GitHub username</mat-label>
+              <input
+                #searchBox
+                matInput
+                [ngModelOptions]="{standalone: true}"
+                [(ngModel)]="searchTerm"
+                (keyup)="onValueChange($event)">
+            </mat-form-field>
+          </form>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

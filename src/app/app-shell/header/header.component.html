@@ -14,7 +14,6 @@
     </nav>
   </div>
   <div fxLayout="row" fxLayoutAlign="space-between center">
-    <form><input matInput #searchBox class="global-search"></form>
     <span><a>jweaver</a></span>
     <mat-icon>settings</mat-icon>
   </div>
@@ -26,6 +25,7 @@
         <span class="title-bar-text">{{ route.title }}</span>
       </div>
       <app-debounce-obs-input
+        *ngIf="route.title != 'login'"
         [inputLabel]="route.title"
         [searchTerm]="routeQueryParams.params.searchTerm">
       </app-debounce-obs-input>
