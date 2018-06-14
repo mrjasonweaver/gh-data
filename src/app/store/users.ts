@@ -4,7 +4,7 @@ import { IUsersObject, IUser, IParams, params } from '../models/users';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { UiStateStore } from './ui-state';
 import { MatSnackBar } from '@angular/material';
-import { map } from 'rxjs/operators';
+import { pluck } from 'rxjs/operators';
 import { makeKeyStr } from '../utilities/objects/objects';
 import { CacheService } from '../services/cache.service';
 
@@ -28,10 +28,10 @@ export class UsersStore {
   }
 
   get users$() {
-    return this.usersObject.pipe(map(res => res.items));
+    return this.usersObject.pipe( pluck('items') );
   }
   get usersCount$() {
-    return this.usersObject.pipe(map(res => res.total_count));
+    return this.usersObject.pipe( pluck('total_count') );
   }
   get userSelected$() {
     return this.userSelected;
