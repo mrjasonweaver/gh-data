@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRoute, ParamMap, Data, Router, NavigationEnd, Event } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router, NavigationEnd } from '@angular/router';
 import { initialUiState, IUiState } from '../models/ui-state';
 import { Observable, BehaviorSubject, Subscription } from 'rxjs';
 import { map, filter, mergeMap, debounceTime } from 'rxjs/operators';
