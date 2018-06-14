@@ -55,7 +55,7 @@ export class UsersStore {
     };
   }
 
-  loadUsers(p): void {
+  loadUsers(p: IParams): void {
     this._key = makeKeyStr(p);
     this.uiStateStore.startAction('Retrieving Users...');
     return this.cache.validKey(this._key) ? this.loadCache() : this.loadApi(p);
@@ -69,8 +69,8 @@ export class UsersStore {
     this.uiStateStore.endAction('Users retrieved');
   }
 
-  loadApi(userParams): void {
-    this.usersService.getUsers(userParams).subscribe(res => {
+  loadApi(p: IParams): void {
+    this.usersService.getUsers(p).subscribe(res => {
       this.cache.setCache(this._key, res);
       this._usersObject.next(res);
       this._userSelected.next(res.items.filter(x => x.id === +this._selected)[0]);
