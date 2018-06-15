@@ -10,17 +10,14 @@ import { CacheService } from '../services/cache.service';
 
 @Injectable()
 export class IssuesStore {
-
+  private _key: string;
   private _issuesObject: BehaviorSubject<any> = new BehaviorSubject({items: []});
-  private _issuesWithComments: BehaviorSubject<any> = new BehaviorSubject([]);
   public readonly issuesObject: Observable<IIssuesObject> = this._issuesObject;
-  public readonly issuesWithComments: Observable<IIssue[]> = this._issuesWithComments;
   config = { duration: 1500 };
-  pSub: Subscription;
-  rSub: Subscription;
 
   constructor(
     private issuesService: IssuesService,
+    private cache: CacheService,
     public uiStateStore: UiStateStore,
     public snackBar: MatSnackBar
   ) { }
@@ -30,9 +27,6 @@ export class IssuesStore {
   }
   get issuesCount$() {
     return this.issuesObject.pipe( pluck('total_count') );
-  }
-  get issuesWithComments$() {
-    return this.issuesWithComments;
   }
 
   getParams(p): IParams {
@@ -46,21 +40,30 @@ export class IssuesStore {
     };
   }
 
-  loadIssues(p: IParams) {
-    this.uiStateStore.startAction('Retrieving issues...');
+  loadIssues(p: IParams): void {
+    this._key = makeKeyStr(p);
+    this.uiStateStore.startAction('Retrieving Issues...');
+    return this.cache.validKey(this._key) ? this.loadCache() : this.loadApi(p);
+  }
+
+  loadCache(): void {
+    const issues = this.cache.getCache(this._key).value;
+    this._issuesObject.next(issues);
+    this.uiStateStore.endAction('Issues retrieved');
+  }
+
+  loadApi(p: IParams): void {
     console.log('loadIssues');
-    this.issuesService.getIssues(p)
-      .subscribe(res => {
-        const comments = res.items.filter(x => x.comments > 0);
-        this._issuesWithComments.next(comments);
-        this._issuesObject.next(res);
-        this.uiStateStore.endAction('Issues retrieved');
-      },
-        err =>  {
-          this.uiStateStore.endAction('Error retrieving issues');
-          this.snackBar.open('No issues found', null, this.config);
-        }
-      );
+    this.issuesService.getIssues(p).subscribe(res => {
+      this.cache.setCache(this._key, res);
+      this._issuesObject.next(res);
+      this.uiStateStore.endAction('Issues retrieved');
+    },
+      err =>  {
+        this.uiStateStore.endAction('Error retrieving issues');
+        this.snackBar.open('No issues found', null, this.config);
+      }
+    );
   }
 
 }
