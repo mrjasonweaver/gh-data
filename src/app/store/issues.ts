@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { IssuesService } from '../services/issues/issues.service';
 import { IIssuesObject, IIssue, IParams, params } from '../models/issues';
-import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import { Observable, Subscription, BehaviorSubject } from 'rxjs';
 import { UiStateStore } from './ui-state';
 import { MatSnackBar } from '@angular/material';
 import { pluck } from 'rxjs/operators';
+import { makeKeyStr } from '../utilities/objects/objects';
+import { CacheService } from '../services/cache.service';
 
 @Injectable()
 export class IssuesStore {
@@ -14,14 +16,14 @@ export class IssuesStore {
   public readonly issuesObject: Observable<IIssuesObject> = this._issuesObject;
   public readonly issuesWithComments: Observable<IIssue[]> = this._issuesWithComments;
   config = { duration: 1500 };
+  pSub: Subscription;
+  rSub: Subscription;
 
   constructor(
     private issuesService: IssuesService,
     public uiStateStore: UiStateStore,
     public snackBar: MatSnackBar
-  ) {
-    this.navigate();
-  }
+  ) { }
 
   get issues$() {
     return this.issuesObject.pipe( pluck('items') );
@@ -33,24 +35,21 @@ export class IssuesStore {
     return this.issuesWithComments;
   }
 
-  navigate() {
-    this.uiStateStore.routeQueryParams$.subscribe(x => {
-      this.loadIssues(
-        {
-          ...params,
-          sort: x.get('sort') || params.sort,
-          order: x.get('order') || params.order,
-          page: x.get('page') || params.page,
-          perPage: x.get('perPage') || params.perPage,
-          searchTerm: x.get('searchTerm') || params.searchTerm
-        }
-      );
-    });
+  getParams(p): IParams {
+    return {
+      ...params,
+      sort: p.get('sort') || params.sort,
+      order: p.get('order') || params.order,
+      page: p.get('page') || params.page,
+      perPage: p.get('perPage') || params.perPage,
+      searchTerm: p.get('searchTerm') || params.searchTerm
+    };
   }
 
-  loadIssues(userParams) {
+  loadIssues(p: IParams) {
     this.uiStateStore.startAction('Retrieving issues...');
-    this.issuesService.getIssues(userParams)
+    console.log('loadIssues');
+    this.issuesService.getIssues(p)
       .subscribe(res => {
         const comments = res.items.filter(x => x.comments > 0);
         this._issuesWithComments.next(comments);

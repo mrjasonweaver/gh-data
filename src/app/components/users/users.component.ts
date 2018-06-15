@@ -1,17 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { UsersStore } from '../../store/users';
 import { UiStateStore } from '../../store/ui-state';
+import { params } from '../../models/users';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css']
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent implements OnInit, OnDestroy {
   routeQueryParams;
   searchTerm = '';
   displayedColumns = ['checkbox', 'id', 'login', 'type', 'score'];
+  pSub: Subscription;
 
   constructor(
     public usersStore: UsersStore,
@@ -20,7 +23,19 @@ export class UsersComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.uiStateStore.routeQueryParams$.subscribe(x => this.routeQueryParams = x);
+    this.navigate();
+  }
+
+  ngOnDestroy() {
+    this.pSub.unsubscribe();
+  }
+
+  private navigate(): void {
+    this.pSub = this.uiStateStore.routeQueryParams$.subscribe(p => {
+      this.routeQueryParams = p;
+      const s = p.get('selected') || params.selected; 
+      return this.usersStore.loadUsers(this.usersStore.getParams(p), s);
+    });
   }
 
   onPageChange(event) {

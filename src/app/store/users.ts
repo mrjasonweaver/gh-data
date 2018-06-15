@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { UsersService } from '../services/users/users.service';
 import { IUsersObject, IUser, IParams, params } from '../models/users';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, Subscription, BehaviorSubject } from 'rxjs';
 import { UiStateStore } from './ui-state';
 import { MatSnackBar } from '@angular/material';
 import { pluck } from 'rxjs/operators';
@@ -23,9 +23,7 @@ export class UsersStore {
     private cache: CacheService,
     public uiStateStore: UiStateStore,
     public snackBar: MatSnackBar
-  ) {
-    this.navigate();
-  }
+  ) { }
 
   get users$() {
     return this.usersObject.pipe( pluck('items') );
@@ -35,13 +33,6 @@ export class UsersStore {
   }
   get userSelected$() {
     return this.userSelected;
-  }
-
-  navigate(): void {
-    this.uiStateStore.routeQueryParams$.subscribe(p => {
-      this._selected = p.get('selected') || params.selected;
-      return this.loadUsers(this.getParams(p));
-    });
   }
 
   getParams(p): IParams {
@@ -55,25 +46,25 @@ export class UsersStore {
     };
   }
 
-  loadUsers(p: IParams): void {
+  loadUsers(p: IParams, s): void {
     this._key = makeKeyStr(p);
     this.uiStateStore.startAction('Retrieving Users...');
-    return this.cache.validKey(this._key) ? this.loadCache() : this.loadApi(p);
+    return this.cache.validKey(this._key) ? this.loadCache(s) : this.loadApi(p, s);
   }
 
-  loadCache(): void {
+  loadCache(s): void {
     const users = this.cache.getCache(this._key).value;
-    const selected = users.items.filter(x => x.id === +this._selected)[0];
+    const selected = users.items.filter(x => x.id === +s)[0];
     this._usersObject.next(users);
     this._userSelected.next(selected);
     this.uiStateStore.endAction('Users retrieved');
   }
 
-  loadApi(p: IParams): void {
+  loadApi(p: IParams, s): void {
     this.usersService.getUsers(p).subscribe(res => {
       this.cache.setCache(this._key, res);
       this._usersObject.next(res);
-      this._userSelected.next(res.items.filter(x => x.id === +this._selected)[0]);
+      this._userSelected.next(res.items.filter(x => x.id === +s)[0]);
       this.uiStateStore.endAction('Users retrieved');
     },
       err =>  {

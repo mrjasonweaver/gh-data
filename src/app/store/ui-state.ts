@@ -10,6 +10,7 @@ export class UiStateStore {
   initialEvent = { target: { value: ''} };
 
   private _route: BehaviorSubject<any> = new BehaviorSubject('');
+  public readonly route: Observable<any> = this._route;
   private _isSelected = false;
   private _uiState: BehaviorSubject<any> = new BehaviorSubject(initialUiState);
   private _routeQueryParams: Observable<ParamMap>;
@@ -42,7 +43,8 @@ export class UiStateStore {
     return this._routeQueryParams;
   }
   get currentRoute$() {
-    return this._route;
+    // this.route.subscribe(rt => console.log('get currentRoute$', rt.title));
+    return this.route;
   }
   get uiState$() {
     return this.uiState;
