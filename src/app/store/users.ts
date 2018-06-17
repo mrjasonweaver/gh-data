@@ -11,7 +11,6 @@ import { CacheService } from '../services/cache.service';
 @Injectable()
 export class UsersStore {
   private _key: string;
-  private _selected: string;
   private _usersObject: BehaviorSubject<any> = new BehaviorSubject({});
   public readonly usersObject: Observable<IUsersObject> = this._usersObject;
   private _userSelected: BehaviorSubject<any> = new BehaviorSubject({});
@@ -46,29 +45,32 @@ export class UsersStore {
     };
   }
 
-  loadUsers(p: IParams, s): void {
+  loadUsers(p: IParams, ap): void {
+    const { selected: s, isSelected} = ap;
     this._key = makeKeyStr(p);
-    this.uiStateStore.startAction('Retrieving Users...');
-    return this.cache.validKey(this._key) ? this.loadCache(s) : this.loadApi(p, s);
+    this.uiStateStore.startAction('Retrieving Users...', isSelected);
+    return this.cache.validKey(this._key) ? this.loadCache(ap) : this.loadApi(p, ap);
   }
 
-  loadCache(s): void {
+  loadCache(ap): void {
+    const { selected: s, isSelected} = ap;
     const users = this.cache.getCache(this._key).value;
     const selected = users.items.filter(x => x.id === +s)[0];
     this._usersObject.next(users);
     this._userSelected.next(selected);
-    this.uiStateStore.endAction('Users retrieved');
+    this.uiStateStore.endAction('Users retrieved', isSelected);
   }
 
-  loadApi(p: IParams, s): void {
+  loadApi(p: IParams, ap): void {
+    const { selected: s, isSelected} = ap;
     this.usersService.getUsers(p).subscribe(res => {
       this.cache.setCache(this._key, res);
       this._usersObject.next(res);
       this._userSelected.next(res.items.filter(x => x.id === +s)[0]);
-      this.uiStateStore.endAction('Users retrieved');
+      this.uiStateStore.endAction('Users retrieved', isSelected);
     },
       err =>  {
-        this.uiStateStore.endAction('Error retrieving Users');
+        this.uiStateStore.endAction('Error retrieving Users', isSelected);
         this.snackBar.open('Error retrieving Users', null, this.config);
       }
     );

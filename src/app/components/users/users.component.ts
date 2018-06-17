@@ -33,8 +33,11 @@ export class UsersComponent implements OnInit, OnDestroy {
   private navigate(): void {
     this.pSub = this.uiStateStore.routeQueryParams$.subscribe(p => {
       this.routeQueryParams = p;
-      const s = p.get('selected') || params.selected; 
-      return this.usersStore.loadUsers(this.usersStore.getParams(p), s);
+      const ap = {
+        selected: p.get('selected') || params.selected,
+        isSelected: p.get('selected') !== null,
+      };
+      return this.usersStore.loadUsers(this.usersStore.getParams(p), ap);
     });
   }
 

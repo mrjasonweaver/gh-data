@@ -11,7 +11,6 @@ export class UiStateStore {
 
   private _route: BehaviorSubject<any> = new BehaviorSubject('');
   public readonly route: Observable<any> = this._route;
-  private _isSelected = false;
   private _uiState: BehaviorSubject<any> = new BehaviorSubject(initialUiState);
   private _routeQueryParams: Observable<ParamMap>;
   private _eventStream: BehaviorSubject<any> = new BehaviorSubject(this.initialEvent);
@@ -35,15 +34,12 @@ export class UiStateStore {
       mergeMap(rt => rt.data)
     ).subscribe(x => this._route.next(x));
 
-    this.isSelected();
-
   }
 
   get routeQueryParams$() {
     return this._routeQueryParams;
   }
   get currentRoute$() {
-    // this.route.subscribe(rt => console.log('get currentRoute$', rt.title));
     return this.route;
   }
   get uiState$() {
@@ -53,26 +49,22 @@ export class UiStateStore {
     return this.eventStream;
   }
 
-  isSelected() {
-    return this._routeQueryParams.subscribe(p => this._isSelected = p.get('selected') !== null);
-  }
-
   onInputChange(e) {
     return this._eventStream.next(e);
   }
 
-  startAction(message: string) {
+  startAction(message: string, isSelected: boolean) {
     this._uiState.next({
       actionOngoing: true,
-      isSelected: this._isSelected,
+      isSelected,
       message
     });
   }
 
-  endAction(message: string) {
+  endAction(message: string, isSelected: boolean) {
     this._uiState.next({
       actionOngoing: false,
-      isSelected: this._isSelected,
+      isSelected,
       message
     });
   }
