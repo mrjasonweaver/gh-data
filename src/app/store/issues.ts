@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IssuesService } from '../services/issues/issues.service';
-import { IIssuesObject, IIssue, IParams, params } from '../models/issues';
-import { Observable, Subscription, BehaviorSubject } from 'rxjs';
+import { IIssuesObject, IParams, params } from '../models/issues';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { UiStateStore } from './ui-state';
 import { MatSnackBar } from '@angular/material';
 import { pluck } from 'rxjs/operators';
@@ -53,7 +53,6 @@ export class IssuesStore {
   }
 
   loadApi(p: IParams): void {
-    console.log('loadIssues');
     this.issuesService.getIssues(p).subscribe(res => {
       this.cache.setCache(this._key, res);
       this._issuesObject.next(res);
