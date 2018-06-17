@@ -42,24 +42,24 @@ export class IssuesStore {
 
   loadIssues(p: IParams): void {
     this._key = makeKeyStr(p);
-    this.uiStateStore.startAction('Retrieving Issues...');
+    this.uiStateStore.startAction('Retrieving Issues...', false);
     return this.cache.validKey(this._key) ? this.loadCache() : this.loadApi(p);
   }
 
   loadCache(): void {
     const issues = this.cache.getCache(this._key).value;
     this._issuesObject.next(issues);
-    this.uiStateStore.endAction('Issues retrieved');
+    this.uiStateStore.endAction('Issues retrieved', false);
   }
 
   loadApi(p: IParams): void {
     this.issuesService.getIssues(p).subscribe(res => {
       this.cache.setCache(this._key, res);
       this._issuesObject.next(res);
-      this.uiStateStore.endAction('Issues retrieved');
+      this.uiStateStore.endAction('Issues retrieved', false);
     },
       err =>  {
-        this.uiStateStore.endAction('Error retrieving issues');
+        this.uiStateStore.endAction('Error retrieving issues', false);
         this.snackBar.open('No issues found', null, this.config);
       }
     );
