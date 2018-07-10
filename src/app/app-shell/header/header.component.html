@@ -7,15 +7,17 @@
     <nav>
       <ul fxLayout="row" fxLayoutAlign="space-between center">
         <li><a [routerLink]="['/dashboard']" routerLinkActive="active">Dashboard</a></li>
-        <li><a [routerLink]="['/reports']" routerLinkActive="active">Reports</a></li>
+        <li><a [routerLink]="['/issues']" routerLinkActive="active">Issues</a></li>
         <li><a [routerLink]="['/users']" routerLinkActive="active">Users</a></li>
-        <li><a [routerLink]="['/organizations']" routerLinkActive="active">Organizations</a></li>
       </ul>
     </nav>
   </div>
-  <div fxLayout="row" fxLayoutAlign="space-between center">
-    <span><a>jweaver</a></span>
-    <mat-icon>settings</mat-icon>
+  <div fxLayout="row" fxLayoutAlign="space-between center" *ngIf="(uiStateStore.currentRoute$ | async) as route">
+    <app-debounce-obs-input
+      *ngIf="route.title != 'login'"
+      [inputLabel]="route.title"
+      [searchTerm]="routeQueryParams.params.searchTerm">
+    </app-debounce-obs-input>
   </div>
 </mat-toolbar>
 <div class="secondary-toolbar" *ngIf="(uiStateStore.currentRoute$ | async) as route">
@@ -24,10 +26,5 @@
         <mat-icon class="title-bar-icon" color="primary">{{ route.icon }}</mat-icon>
         <span class="title-bar-text">{{ route.title }}</span>
       </div>
-      <app-debounce-obs-input
-        *ngIf="route.title != 'login'"
-        [inputLabel]="route.title"
-        [searchTerm]="routeQueryParams.params.searchTerm">
-      </app-debounce-obs-input>
     </mat-toolbar>
 </div>
