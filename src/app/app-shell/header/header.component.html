@@ -2,7 +2,7 @@
   <mat-progress-bar *ngIf="uiState.actionOngoing" mode="indeterminate" color="accent"></mat-progress-bar>
 </div>
 <mat-toolbar class="header" color="primary" fxLayout="row" fxLayoutAlign="space-between center">
-  <div fxLayout="row" fxLayoutAlign="space-between center">
+  <div fxLayout="row" fxLayoutAlign="start center">
     <app-logo></app-logo>
     <nav>
       <ul fxLayout="row" fxLayoutAlign="space-between center">
@@ -12,19 +12,24 @@
       </ul>
     </nav>
   </div>
-  <div fxLayout="row" fxLayoutAlign="space-between center" *ngIf="(uiStateStore.currentRoute$ | async) as route">
+  <div fxLayout="row" fxLayoutAlign="end center">
+    <nav>
+      <ul fxLayout="row" fxLayoutAlign="space-between center">
+        <li fxFlexAlign="end"><a [routerLink]="['/login']" routerLinkActive="active">Login</a></li>
+      </ul>
+    </nav>
+  </div>
+</mat-toolbar>
+<div class="secondary-toolbar" *ngIf="(uiStateStore.currentRoute$ | async) as route">
+  <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" >
+    <div fxLayout="row" fxLayoutAlign="center start">
+      <mat-icon class="title-bar-icon" color="primary">{{ route.icon }}</mat-icon>
+      <span class="title-bar-text">{{ route.title }}</span>
+    </div>
     <app-debounce-obs-input
       *ngIf="route.title != 'login'"
       [inputLabel]="route.title"
       [searchTerm]="routeQueryParams.params.searchTerm">
     </app-debounce-obs-input>
-  </div>
-</mat-toolbar>
-<div class="secondary-toolbar" *ngIf="(uiStateStore.currentRoute$ | async) as route">
-  <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" >
-      <div fxLayout="row" fxLayoutAlign="center start">
-        <mat-icon class="title-bar-icon" color="primary">{{ route.icon }}</mat-icon>
-        <span class="title-bar-text">{{ route.title }}</span>
-      </div>
-    </mat-toolbar>
+  </mat-toolbar>
 </div>

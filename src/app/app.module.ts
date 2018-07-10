@@ -19,7 +19,6 @@ import { IssuesStore } from './store/issues';
 import { IssuesService } from './services/issues/issues.service';
 import { UiStateStore } from './store/ui-state';
 import { UsersComponent } from './components/users/users.component';
-import { OrganizationsComponent } from './components/organizations/organizations.component';
 import { UsersService } from './services/users/users.service';
 import { UsersStore } from './store/users';
 import { DebounceObsInputComponent } from './components/debounce-obs-input/debounce-obs-input.component';
@@ -35,7 +34,6 @@ import { LoginComponent } from './components/login/login.component';
     LogoComponent,
     IssuesComponent,
     UsersComponent,
-    OrganizationsComponent,
     DebounceObsInputComponent,
     LoginComponent
   ],
@@ -76,22 +74,16 @@ import { LoginComponent } from './components/login/login.component';
         data: { animation: 'dashboard', title: 'Dashboard', icon: 'dashboard' }
       },
       {
-        path: 'reports',
+        path: 'issues',
         pathMatch: 'full',
         component: IssuesComponent,
-        data: { animation: 'reports', title: 'Reports', icon: 'insert_chart' }
+        data: { animation: 'issues', title: 'Issues', icon: 'insert_chart' }
       },
       {
         path: 'users',
         pathMatch: 'full',
         component: UsersComponent,
         data: { animation: 'users', title: 'Users', icon: 'account_circle' }
-      },
-      {
-        path: 'organizations',
-        pathMatch: 'full',
-        component: OrganizationsComponent,
-        data: { animation: 'organizations', title: 'Organizations', icon: 'group_work' }
       },
       {
         path: 'login',
