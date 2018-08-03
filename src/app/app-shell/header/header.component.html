@@ -26,8 +26,7 @@
       <mat-icon class="title-bar-icon" color="primary">{{ route.icon }}</mat-icon>
       <span class="title-bar-text">{{ route.title }}</span>
     </div>
-    <app-debounce-obs-input
-      *ngIf="route.title != 'login'"
+    <app-debounce-obs-input *ngIf="showSearch"
       [inputLabel]="route.title"
       [searchTerm]="routeQueryParams.params.searchTerm">
     </app-debounce-obs-input>

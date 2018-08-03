@@ -17,8 +17,8 @@ export interface IIssuesObject {
   items: IIssue[];
 }
 
-export const issuesObject: IIssuesObject = {
-  total_count: 100,
+export const initialIssuesObject: IIssuesObject = {
+  total_count: 0,
   items: []
 };
 

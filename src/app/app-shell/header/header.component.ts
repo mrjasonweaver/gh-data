@@ -22,6 +22,13 @@ export class HeaderComponent implements OnInit {
     this.uiStateStore.currentRoute$.subscribe(cr => cr ? this.currentRoute = cr.title.toLowerCase() : null);
   }
 
+  get showSearch(): boolean {
+    const rt = this.currentRoute;
+    const dashboard = rt === 'dashboard';
+    const login = rt === 'login';
+    return !login && !dashboard;
+  }
+
   onSearchChange() {
     const { sort, order, page } = this.routeQueryParams.params;
     return this.router.navigate([`/${this.currentRoute}`], { queryParams: { sort, order, page, searchTerm: this.searchTerm } });

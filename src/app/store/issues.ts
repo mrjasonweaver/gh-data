@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IssuesService } from '../services/issues/issues.service';
-import { IIssuesObject, IParams, params } from '../models/issues';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { IIssuesObject, IParams, IIssue, params, initialIssuesObject } from '../models/issues';
+import { Observable, BehaviorSubject, Subscription } from 'rxjs';
 import { UiStateStore } from './ui-state';
 import { MatSnackBar } from '@angular/material';
 import { pluck } from 'rxjs/operators';
@@ -11,7 +11,7 @@ import { CacheService } from '../services/cache.service';
 @Injectable()
 export class IssuesStore {
   private _key: string;
-  private _issuesObject: BehaviorSubject<any> = new BehaviorSubject({items: []});
+  private _issuesObject: BehaviorSubject<IIssuesObject> = new BehaviorSubject(initialIssuesObject);
   public readonly issuesObject: Observable<IIssuesObject> = this._issuesObject;
   config = { duration: 1500 };
 
@@ -22,10 +22,10 @@ export class IssuesStore {
     public snackBar: MatSnackBar
   ) { }
 
-  get issues$() {
+  get issues$(): Observable<IIssue[]> {
     return this.issuesObject.pipe( pluck('items') );
   }
-  get issuesCount$() {
+  get issuesCount$(): Observable<number> {
     return this.issuesObject.pipe( pluck('total_count') );
   }
 
@@ -40,7 +40,7 @@ export class IssuesStore {
     };
   }
 
-  loadIssues(p: IParams): void {
+  loadIssues(p: IParams): Subscription | void {
     this._key = makeKeyStr(p);
     this.uiStateStore.startAction('Retrieving Issues...', false);
     return this.cache.validKey(this._key) ? this.loadCache() : this.loadApi(p);
@@ -52,8 +52,8 @@ export class IssuesStore {
     this.uiStateStore.endAction('Issues retrieved', false);
   }
 
-  loadApi(p: IParams): void {
-    this.issuesService.getIssues(p).subscribe(res => {
+  loadApi(p: IParams): Subscription {
+    return this.issuesService.getIssues(p).subscribe(res => {
       this.cache.setCache(this._key, res);
       this._issuesObject.next(res);
       this.uiStateStore.endAction('Issues retrieved', false);
