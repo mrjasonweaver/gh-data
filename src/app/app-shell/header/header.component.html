@@ -13,9 +13,13 @@
     </nav>
   </div>
   <div fxLayout="row" fxLayoutAlign="end center">
-    <nav>
+    <nav *ngIf="(currentUserStore.currentUser$ | async) as currentUser">
       <ul fxLayout="row" fxLayoutAlign="space-between center">
-        <li fxFlexAlign="end"><a [routerLink]="['/login']" routerLinkActive="active">Login</a></li>
+        <li *ngIf="!currentUser.login" fxFlexAlign="end"><a [routerLink]="['/login']" routerLinkActive="active">Login</a></li>
+        <li *ngIf="currentUser.login" fxLayout="row" fxLayoutAlign="end center" fxFlexAlign="end">
+          <img class="current-user-avatar" src="{{currentUser.avatar_url}}">
+          <span>{{currentUser.login}}</span>
+        </li>
       </ul>
     </nav>
   </div>

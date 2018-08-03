@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UiStateStore } from '../../store/ui-state';
 import { Router } from '@angular/router';
+import { CurrentUserStore } from '../../store/currentUser';
 
 interface routeData {
   title: string;
@@ -15,7 +16,11 @@ export class HeaderComponent implements OnInit {
   routeQueryParams;
   currentRoute;
   searchTerm = '';
-  constructor(public uiStateStore: UiStateStore, private router: Router) {}
+  constructor(
+    public uiStateStore: UiStateStore,
+    private router: Router,
+    private currentUserStore: CurrentUserStore
+  ) {}
 
   ngOnInit() {
     this.uiStateStore.routeQueryParams$.subscribe(qp => this.routeQueryParams = qp);

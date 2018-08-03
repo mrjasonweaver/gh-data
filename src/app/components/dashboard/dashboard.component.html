@@ -1,72 +1,33 @@
-<div *ngIf="(currentUserStore.currentUser$ | async) as currentUser">
-  <pre *ngIf="currentUser.login">{{currentUser | json}}</pre>
-</div>
-
-<!-- <div class="app-container">
-  <div class="container" fxLayout="column" fxLayoutAlign="space-around center">
+<div *ngIf="(currentUserStore.currentUser$ | async) as currentUser" class="app-container">
+  <div class="container" *ngIf="currentUser.login" fxLayout="column" fxLayoutAlign="space-around center">
     <div fxLayout="row wrap" fxLayoutAlign="space-around center">
       <mat-card>
         <mat-card-header>
-          <mat-icon mat-card-avatar color="primary">location_city</mat-icon>
-          <mat-card-title>Sites Monitored</mat-card-title>
-          <mat-card-subtitle>Sites you monitor</mat-card-subtitle>
+          <mat-icon mat-card-avatar color="primary">book</mat-icon>
+          <mat-card-title>Repositories</mat-card-title>
+          <mat-card-subtitle>Public repo count</mat-card-subtitle>
         </mat-card-header>
         <mat-divider></mat-divider>
         <mat-card-content>
-          <div class="big-digits">567</div>
+          <div class="big-digits">{{currentUser.public_repos}}</div>
+        </mat-card-content>
+      </mat-card>
+      <mat-card>
+        <mat-card-header>
+          <mat-icon mat-card-avatar color="primary">bookmarks</mat-icon>
+          <mat-card-title>Gists</mat-card-title>
+          <mat-card-subtitle>Public gist count</mat-card-subtitle>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-content>
+          <div class="big-digits">{{currentUser.public_gists}}</div>
         </mat-card-content>
       </mat-card>
       <mat-card>
         <mat-card-header>
           <mat-icon mat-card-avatar color="primary">new_releases</mat-icon>
-          <mat-card-title>Open Issues</mat-card-title>
-          <mat-card-subtitle>Your open issues</mat-card-subtitle>
-        </mat-card-header>
-        <mat-divider></mat-divider>
-        <mat-card-content>
-          <div class="big-digits">29</div>
-        </mat-card-content>
-      </mat-card>
-      <mat-card>
-        <mat-card-header>
-          <mat-icon mat-card-avatar color="primary">battery_full</mat-icon>
-          <mat-card-title>Lifetime Energy</mat-card-title>
-          <mat-card-subtitle>The entire lifetime energy production</mat-card-subtitle>
-        </mat-card-header>
-        <mat-divider></mat-divider>
-        <mat-card-content>
-          <div class="big-digits">1.5</div>
-        </mat-card-content>
-      </mat-card>
-    </div>
-    <div fxLayout="row wrap" fxLayoutAlign="space-around center">
-      <mat-card>
-        <mat-card-header>
-          <mat-icon mat-card-avatar color="warn">error</mat-icon>
-          <mat-card-title>Inverters</mat-card-title>
-          <mat-card-subtitle>Sites sites with inverters down</mat-card-subtitle>
-        </mat-card-header>
-        <mat-divider></mat-divider>
-        <mat-card-content>
-          <div class="big-digits">13</div>
-        </mat-card-content>
-      </mat-card>
-      <mat-card>
-        <mat-card-header>
-          <mat-icon mat-card-avatar color="accent">warning</mat-icon>
-          <mat-card-title>Monitor Errors</mat-card-title>
-          <mat-card-subtitle>Sites with monitoring errors</mat-card-subtitle>
-        </mat-card-header>
-        <mat-divider></mat-divider>
-        <mat-card-content>
-          <div class="big-digits">4</div>
-        </mat-card-content>
-      </mat-card>
-      <mat-card>
-        <mat-card-header>
-          <mat-icon mat-card-avatar color="warn">perm_scan_wifi</mat-icon>
-          <mat-card-title>Internet Communication</mat-card-title>
-          <mat-card-subtitle>Sites with internet comm errors</mat-card-subtitle>
+          <mat-card-title>Issues</mat-card-title>
+          <mat-card-subtitle>Your issue count</mat-card-subtitle>
         </mat-card-header>
         <mat-divider></mat-divider>
         <mat-card-content>
@@ -74,5 +35,40 @@
         </mat-card-content>
       </mat-card>
     </div>
+    <div fxLayout="row wrap" fxLayoutAlign="space-around center">
+      <mat-card>
+        <mat-card-header>
+          <mat-icon mat-card-avatar>people</mat-icon>
+          <mat-card-title>Followers</mat-card-title>
+          <mat-card-subtitle>Your follower count</mat-card-subtitle>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-content>
+          <div class="big-digits">{{currentUser.followers}}</div>
+        </mat-card-content>
+      </mat-card>
+      <mat-card>
+        <mat-card-header>
+          <mat-icon mat-card-avatar>people_outline</mat-icon>
+          <mat-card-title>Following</mat-card-title>
+          <mat-card-subtitle>Your following count</mat-card-subtitle>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-content>
+          <div class="big-digits">{{currentUser.following}}</div>
+        </mat-card-content>
+      </mat-card>
+      <mat-card>
+        <mat-card-header>
+          <mat-icon mat-card-avatar>merge_type</mat-icon>
+          <mat-card-title>Pull Requests</mat-card-title>
+          <mat-card-subtitle>Your pull request count</mat-card-subtitle>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-content>
+          <div class="big-digits">5</div>
+        </mat-card-content>
+      </mat-card>
+    </div>
   </div>
-</div> -->
+</div>

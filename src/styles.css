@@ -78,15 +78,17 @@ nav ul {
   list-style: none;
   font-family: 'Sunflower', "Helvetica Neue", sans-serif;
 }
-nav ul a {
+nav li {
   font-size: 14px;
+  font-weight: 300;
+}
+nav ul a {
   color: rgba(255,255,255,.6);
   text-decoration: none;
   margin: 0 0 0 40px;
 }
 nav ul li a {
   text-transform: uppercase;
-  font-weight: 300;
   letter-spacing: 2px;
 }
 nav a:hover, nav .active {
@@ -140,4 +142,11 @@ nav a:hover, nav .active {
 }
 .ckbx-outline {
   color: #ccc;
+}
+.current-user-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 30px;
+  border: 2px solid rgba(255,255,255,.75);
+  margin-right: 10px;
 }
