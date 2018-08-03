@@ -1,19 +1,22 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router, NavigationEnd } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router, NavigationEnd, Data } from '@angular/router';
 import { initialUiState, IUiState } from '../models/ui-state';
 import { Observable, BehaviorSubject, Subscription } from 'rxjs';
 import { map, filter, mergeMap, debounceTime } from 'rxjs/operators';
 
+interface IEventTarget {
+  target: { value: string; };
+}
 @Injectable()
 export class UiStateStore {
 
   initialEvent = { target: { value: ''} };
 
-  private _route: BehaviorSubject<any> = new BehaviorSubject('');
-  public readonly route: Observable<any> = this._route;
-  private _uiState: BehaviorSubject<any> = new BehaviorSubject(initialUiState);
+  private _route: BehaviorSubject<Data | string> = new BehaviorSubject('');
+  public readonly route: Observable<Data | string> = this._route;
+  private _uiState: BehaviorSubject<IUiState> = new BehaviorSubject(initialUiState);
   private _routeQueryParams: Observable<ParamMap>;
-  private _eventStream: BehaviorSubject<any> = new BehaviorSubject(this.initialEvent);
+  private _eventStream: BehaviorSubject<IEventTarget> = new BehaviorSubject(this.initialEvent);
 
   eventStream: Observable<string> = this._eventStream.pipe(
     debounceTime(300),
