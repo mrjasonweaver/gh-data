@@ -9,9 +9,7 @@
               <input
                 #searchBox
                 matInput
-                [ngModelOptions]="{standalone: true}"
-                [(ngModel)]="searchTerm"
-                (keyup)="onValueChange($event)">
+                (keyup.enter)="onValueChange($event)">
             </mat-form-field>
           </form>
         </mat-card-content>

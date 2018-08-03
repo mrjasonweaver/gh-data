@@ -7,7 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatToolbarModule, MatButtonModule, MatCheckboxModule, MatTooltipModule, MatCardModule, MatSnackBarModule,
   MatInputModule, MatTableModule, MatPaginatorModule, MatIconModule, MatProgressBarModule,
   MatSidenavModule, MatSlideToggleModule, MatDividerModule, MatExpansionModule,
-  MatSortModule, MatPaginator } from '@angular/material';
+  MatSortModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppComponent } from './app.component';
@@ -24,6 +24,8 @@ import { UsersStore } from './store/users';
 import { DebounceObsInputComponent } from './components/debounce-obs-input/debounce-obs-input.component';
 import { CacheService } from './services/cache.service';
 import { LoginComponent } from './components/login/login.component';
+import { CurrentUserStore } from './store/currentUser';
+import { CurrentUserService } from './services/currentUser/currentUser.service';
 
 
 @NgModule({
@@ -100,7 +102,9 @@ import { LoginComponent } from './components/login/login.component';
     IssuesStore,
     UiStateStore,
     UsersStore,
-    CacheService
+    CacheService,
+    CurrentUserStore,
+    CurrentUserService
   ],
   bootstrap: [AppComponent]
 })

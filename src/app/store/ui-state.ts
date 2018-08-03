@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router, NavigationEnd, Data } from '@angular/router';
 import { initialUiState, IUiState } from '../models/ui-state';
-import { Observable, BehaviorSubject, Subscription } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { map, filter, mergeMap, debounceTime } from 'rxjs/operators';
 
 interface IEventTarget {
@@ -13,17 +13,15 @@ export class UiStateStore {
   initialEvent = { target: { value: ''} };
 
   private _route: BehaviorSubject<Data | string> = new BehaviorSubject('');
-  public readonly route: Observable<Data | string> = this._route;
+  readonly route: Observable<Data | string> = this._route.asObservable();
   private _uiState: BehaviorSubject<IUiState> = new BehaviorSubject(initialUiState);
+  readonly uiState: Observable<IUiState> = this._uiState.asObservable();
   private _routeQueryParams: Observable<ParamMap>;
   private _eventStream: BehaviorSubject<IEventTarget> = new BehaviorSubject(this.initialEvent);
-
   eventStream: Observable<string> = this._eventStream.pipe(
     debounceTime(300),
     map(e => e.target.value)
   );
-
-  readonly uiState: Observable<IUiState> = this._uiState;
 
   constructor(private r: ActivatedRoute, private router: Router) {
 

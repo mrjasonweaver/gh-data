@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CurrentUserStore } from '../../store/currentUser';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  constructor(private currentUserStore: CurrentUserStore) {}
 
   ngOnInit() {
+  }
+
+  onValueChange(event) {
+    const username = event.target.value;
+    this.currentUserStore.loadCurrentUser(username);
   }
 
 }

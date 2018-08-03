@@ -28,8 +28,8 @@ export class IssuesComponent {
     this.pSub.unsubscribe();
   }
 
-  private navigate(): void {
-    this.pSub = this.uiStateStore.routeQueryParams$.subscribe(p => {
+  private navigate(): Subscription {
+    return this.pSub = this.uiStateStore.routeQueryParams$.subscribe(p => {
       this.routeQueryParams = p;
       return this.issuesStore.loadIssues(this.issuesStore.getParams(p));
     });

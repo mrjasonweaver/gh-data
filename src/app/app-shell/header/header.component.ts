@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { UiStateStore } from '../../store/ui-state';
 import { Router } from '@angular/router';
 
+interface routeData {
+  title: string;
+}
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -17,9 +21,9 @@ export class HeaderComponent implements OnInit {
     this.uiStateStore.routeQueryParams$.subscribe(qp => this.routeQueryParams = qp);
     this.uiStateStore.inputValue$.subscribe(iv => {
       this.searchTerm = iv;
-      return this.searchTerm ? this.onSearchChange() : null;
+      if (this.searchTerm) { this.onSearchChange() }
     });
-    this.uiStateStore.currentRoute$.subscribe(cr => cr ? this.currentRoute = cr.title.toLowerCase() : null);
+    this.uiStateStore.currentRoute$.subscribe((cr: routeData) => cr ? this.currentRoute = cr.title.toLowerCase() : null);
   }
 
   get showSearch(): boolean {
@@ -29,7 +33,7 @@ export class HeaderComponent implements OnInit {
     return !login && !dashboard;
   }
 
-  onSearchChange() {
+  onSearchChange(): Promise<boolean> {
     const { sort, order, page } = this.routeQueryParams.params;
     return this.router.navigate([`/${this.currentRoute}`], { queryParams: { sort, order, page, searchTerm: this.searchTerm } });
   }

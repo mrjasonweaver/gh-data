@@ -1,4 +1,8 @@
-<div class="app-container">
+<div *ngIf="(currentUserStore.currentUser$ | async) as currentUser">
+  <pre *ngIf="currentUser.login">{{currentUser | json}}</pre>
+</div>
+
+<!-- <div class="app-container">
   <div class="container" fxLayout="column" fxLayoutAlign="space-around center">
     <div fxLayout="row wrap" fxLayoutAlign="space-around center">
       <mat-card>
@@ -71,4 +75,4 @@
       </mat-card>
     </div>
   </div>
-</div>
+</div> -->
