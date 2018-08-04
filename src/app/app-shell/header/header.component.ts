@@ -3,7 +3,7 @@ import { UiStateStore } from '../../store/ui-state';
 import { Router } from '@angular/router';
 import { CurrentUserStore } from '../../store/currentUser';
 
-interface routeData {
+interface IRouteData {
   title: string;
 }
 
@@ -26,9 +26,9 @@ export class HeaderComponent implements OnInit {
     this.uiStateStore.routeQueryParams$.subscribe(qp => this.routeQueryParams = qp);
     this.uiStateStore.inputValue$.subscribe(iv => {
       this.searchTerm = iv;
-      if (this.searchTerm) { this.onSearchChange() }
+      if (this.searchTerm) { this.onSearchChange(); }
     });
-    this.uiStateStore.currentRoute$.subscribe((cr: routeData) => cr ? this.currentRoute = cr.title.toLowerCase() : null);
+    this.uiStateStore.currentRoute$.subscribe((cr: IRouteData) => cr ? this.currentRoute = cr.title.toLowerCase() : null);
   }
 
   get showSearch(): boolean {

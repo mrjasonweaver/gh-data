@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './issues.component.html',
   styleUrls: ['./issues.component.css']
 })
-export class IssuesComponent {
+export class IssuesComponent implements OnInit, OnDestroy {
   routeQueryParams;
   displayedColumns = ['number', 'user', 'type', 'title', 'created', 'comments'];
   pSub: Subscription;

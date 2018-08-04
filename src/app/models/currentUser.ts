@@ -62,4 +62,4 @@ export const initialCurrentUser: ICurrentUser = {
   following: 0,
   created_at: '',
   updated_at: ''
-}
+};
