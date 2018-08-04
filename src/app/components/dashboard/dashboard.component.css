@@ -12,6 +12,11 @@
 mat-icon {
   font-size: 36px;
 }
+.mat-card-avatar {
+  width: 36px;
+  height: 36px;
+  margin-right: 10px;
+}
 mat-card {
   margin: 5px;
   min-width: 300px;

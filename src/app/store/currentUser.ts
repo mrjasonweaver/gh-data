@@ -5,6 +5,7 @@ import { Observable, BehaviorSubject, Subscription } from 'rxjs';
 import { UiStateStore } from './ui-state';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class CurrentUserStore {
@@ -21,6 +22,9 @@ export class CurrentUserStore {
 
   get currentUser$(): Observable<ICurrentUser> {
     return this.currentUser;
+  }
+  get userLoggedIn$(): Observable<boolean> {
+    return this.currentUser.pipe( map(user => user.login ? true : false) );
   }
 
   loadCurrentUser(un: string): Subscription {

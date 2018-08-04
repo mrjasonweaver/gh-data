@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule, RouterEvent } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { MatToolbarModule, MatButtonModule, MatCheckboxModule, MatTooltipModule, MatCardModule, MatSnackBarModule,
   MatInputModule, MatTableModule, MatPaginatorModule, MatIconModule, MatProgressBarModule,
@@ -26,6 +26,7 @@ import { CacheService } from './services/cache.service';
 import { LoginComponent } from './components/login/login.component';
 import { CurrentUserStore } from './store/currentUser';
 import { CurrentUserService } from './services/currentUser/currentUser.service';
+import { AuthGuard } from './services/authGuard/authGuard.service';
 
 
 @NgModule({
@@ -73,18 +74,21 @@ import { CurrentUserService } from './services/currentUser/currentUser.service';
         path: 'dashboard',
         pathMatch: 'full',
         component: DashboardComponent,
+        canActivate: [AuthGuard],
         data: { animation: 'dashboard', title: 'Dashboard', icon: 'dashboard' }
       },
       {
         path: 'issues',
         pathMatch: 'full',
         component: IssuesComponent,
+        canActivate: [AuthGuard],
         data: { animation: 'issues', title: 'Issues', icon: 'insert_chart' }
       },
       {
         path: 'users',
         pathMatch: 'full',
         component: UsersComponent,
+        canActivate: [AuthGuard],
         data: { animation: 'users', title: 'Users', icon: 'account_circle' }
       },
       {
@@ -104,7 +108,8 @@ import { CurrentUserService } from './services/currentUser/currentUser.service';
     UsersStore,
     CacheService,
     CurrentUserStore,
-    CurrentUserService
+    CurrentUserService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })
