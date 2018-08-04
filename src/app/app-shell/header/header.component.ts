@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { UiStateStore } from '../../store/ui-state';
 import { Router } from '@angular/router';
+
+import { UiStateStore } from '../../store/ui-state';
 import { CurrentUserStore } from '../../store/currentUser';
 
-interface IRouteData {
+export interface IRouteData {
   title: string;
 }
 
@@ -18,8 +19,8 @@ export class HeaderComponent implements OnInit {
   searchTerm = '';
   constructor(
     public uiStateStore: UiStateStore,
-    private router: Router,
-    private currentUserStore: CurrentUserStore
+    public currentUserStore: CurrentUserStore,
+    private router: Router
   ) {}
 
   ngOnInit() {
