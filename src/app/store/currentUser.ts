@@ -11,6 +11,7 @@ import { map } from 'rxjs/operators';
 export class CurrentUserStore {
   private _currentUser: BehaviorSubject<ICurrentUser> = new BehaviorSubject(initialCurrentUser);
   readonly currentUser: Observable<ICurrentUser> = this._currentUser.asObservable();
+  localUserData;
   config = { duration: 1500 };
 
   constructor(
@@ -18,18 +19,33 @@ export class CurrentUserStore {
     public uiStateStore: UiStateStore,
     public snackBar: MatSnackBar,
     private router: Router
-  ) { }
+  ) {
+    this.localUserData = JSON.parse(localStorage.getItem('ghdata-app-username'));
+    if (this.localUserData) {
+      this.loadCurrentUser();
+    }
+  }
 
   get currentUser$(): Observable<ICurrentUser> {
     return this.currentUser;
   }
   get userLoggedIn$(): Observable<boolean> {
-    return this.currentUser.pipe( map(user => user.login ? true : false) );
+    return this.currentUser.pipe( map(user => user.login || this.localUserData ? true : false) );
   }
 
-  loadCurrentUser(un: string): Subscription {
+  loadCurrentUser(un?: string): Subscription | void {
     this.uiStateStore.startAction('Retrieving user...', false);
+    return this.localUserData ? this.loadUserFromLocalStorage(this.localUserData) : this.loadUserFromApi(un);
+  }
+
+  loadUserFromLocalStorage(localUserData: ICurrentUser): void {
+    this._currentUser.next(localUserData);
+    this.uiStateStore.endAction('User retrieved', false);
+  }
+
+  loadUserFromApi(un: string): Subscription {
     return this.currentUserService.getUserByUsername(un).subscribe(res => {
+      localStorage.setItem('ghdata-app-username', JSON.stringify(res));
       this._currentUser.next(res);
       this.uiStateStore.endAction('User retrieved', false);
       this.router.navigate(['/dashboard']);
