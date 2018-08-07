@@ -36,6 +36,7 @@ export class CurrentUserStore {
   logoutCurrentUser(): void {
     this.uiStateStore.startAction('Logging out user...', false);
     localStorage.removeItem('ghdata-app-username');
+    this.localUserData = null;
     this._currentUser.next(initialCurrentUser);
     this.uiStateStore.endAction('User logged out', false);
     this.router.navigate(['/login']);
@@ -49,7 +50,6 @@ export class CurrentUserStore {
   loadUserFromLocalStorage(localUserData: ICurrentUser): void {
     this._currentUser.next(localUserData);
     this.uiStateStore.endAction('User retrieved', false);
-    this.router.navigate(['/dashboard']);
   }
 
   loadUserFromApi(un: string): Subscription {
