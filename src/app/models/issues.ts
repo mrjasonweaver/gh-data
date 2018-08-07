@@ -25,6 +25,7 @@ export const initialIssuesObject: IIssuesObject = {
 export interface IParams {
   username: string;
   repo: string;
+  type: string;
   page: number;
   perPage: number;
   sort: string;
@@ -35,6 +36,7 @@ export interface IParams {
 export const params: IParams = {
   username: 'angular',
   repo: 'angular',
+  type: 'issues',
   page: 1,
   perPage: 10,
   sort: 'created',

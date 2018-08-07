@@ -40,6 +40,7 @@ export class IssuesComponent implements OnInit, OnDestroy {
   private getParams(p): IParams {
     return {
       ...params,
+      type: p.get('type') || params.type,
       sort: p.get('sort') || params.sort,
       order: p.get('order') || params.order,
       page: p.get('page') || params.page,
