@@ -1,6 +1,6 @@
 <div *ngIf="(currentUserStore.currentUser$ | async) as currentUser" class="app-container">
   <div class="container" *ngIf="currentUser.login" fxLayout="column" fxLayoutAlign="space-around center">
-    <div fxLayout="row wrap" fxLayoutAlign="space-around center">
+    <div fxLayout="row" fxLayoutAlign="space-around center">
       <mat-card>
         <mat-card-header>
           <mat-icon mat-card-avatar color="primary">book</mat-icon>
@@ -31,7 +31,10 @@
         </mat-card-header>
         <mat-divider></mat-divider>
         <mat-card-content>
-          <div class="big-digits">12</div>
+          <div *ngIf="(issuesStore.issuesCount$ | async) as issuesCount; else noissues" class="big-digits">
+            {{issuesCount}}
+          </div>
+          <ng-template #noissues> <div class="big-digits">0</div> </ng-template>
         </mat-card-content>
       </mat-card>
     </div>

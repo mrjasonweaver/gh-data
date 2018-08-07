@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-import { IssuesService } from '../services/issues/issues.service';
-import { IIssuesObject, IParams, IIssue, params, initialIssuesObject } from '../models/issues';
-import { Observable, BehaviorSubject, Subscription } from 'rxjs';
-import { UiStateStore } from './ui-state';
 import { MatSnackBar } from '@angular/material';
+import { Observable, BehaviorSubject, Subscription } from 'rxjs';
 import { pluck } from 'rxjs/operators';
+
 import { makeKeyStr } from '../utilities/objects/objects';
 import { CacheService } from '../services/cache.service';
+import { UiStateStore } from './ui-state';
+import { IssuesService } from '../services/issues/issues.service';
+import { IIssuesObject, IParams, IIssue, initialIssuesObject } from '../models/issues';
 
 @Injectable()
 export class IssuesStore {
@@ -27,17 +28,6 @@ export class IssuesStore {
   }
   get issuesCount$(): Observable<number> {
     return this.issuesObject.pipe( pluck('total_count') );
-  }
-
-  getParams(p): IParams {
-    return {
-      ...params,
-      sort: p.get('sort') || params.sort,
-      order: p.get('order') || params.order,
-      page: p.get('page') || params.page,
-      perPage: p.get('perPage') || params.perPage,
-      searchTerm: p.get('searchTerm') || params.searchTerm
-    };
   }
 
   loadIssues(p: IParams): Subscription | void {

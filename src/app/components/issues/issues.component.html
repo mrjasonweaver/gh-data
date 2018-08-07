@@ -41,11 +41,17 @@
   
     </mat-table>
   
-    <mat-paginator *ngIf="(issuesStore.issuesCount$ | async) as issuesCount"
+    <mat-paginator *ngIf="(issuesStore.issuesCount$ | async) as issuesCount; else noissues"
       (page)="onPageChange($event, routeQueryParams.params)"
       [length]="issuesCount"
       [pageIndex]="routeQueryParams.params.page - 1"
       [pageSize]="'10'">
     </mat-paginator>
+    <ng-template #noissues>
+      <div class="none-found-container" fxLayout="row" fxLayoutAlign="center center">
+        <mat-icon>announcement</mat-icon> 
+        <h3>No issues found</h3>
+      </div>
+    </ng-template>
   </mat-card>
 </div>

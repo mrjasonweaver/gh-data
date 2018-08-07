@@ -31,7 +31,7 @@
       <span class="title-bar-text">{{ route.title }}</span>
     </div>
     <app-debounce-obs-input *ngIf="showSearch"
-      [inputLabel]="route.title"
+      [inputLabel]="'users'"
       [searchTerm]="routeQueryParams.params.searchTerm">
     </app-debounce-obs-input>
   </mat-toolbar>

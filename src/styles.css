@@ -156,3 +156,12 @@ nav a:hover, nav .active {
   border: 2px solid rgba(255,255,255,.75);
   margin-right: 10px;
 }
+.none-found-container {
+  padding: 40px;
+}
+.none-found-container .mat-icon {
+  margin-right: 5px;
+}
+.none-found-container h3 {
+  margin-left: 5px;
+}
