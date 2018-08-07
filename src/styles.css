@@ -94,6 +94,12 @@ nav ul li a {
 nav a:hover, nav .active {
   color: white;
 }
+.exit-icon {
+  margin-left: 10px;
+}
+.exit-icon:hover {
+  cursor: pointer;
+}
 .global-search {
   width: 300px;
   background: rgba(255,255,255,.75);

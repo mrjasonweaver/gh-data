@@ -18,6 +18,9 @@
 .mat-card {
   margin-bottom: 30px;
 }
+.mat-card.no-shadow {
+  box-shadow: none;
+}
 .mat-card-content {
   margin: 0 -24px;
 }

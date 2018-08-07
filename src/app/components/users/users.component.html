@@ -7,14 +7,20 @@
         <span class="title-bar-text">User</span>
       </mat-toolbar>
     </div>
-    <div *ngIf="(usersStore.userSelected$ | async) as userSelected">
-      <ul>
-        <li>{{userSelected.login}}</li>
-        <li>{{userSelected.type}}</li>
-        <li>{{userSelected.score}}</li>
-        <li>{{userSelected.site_admin}}</li>
-      </ul>
-    </div>
+    <mat-card *ngIf="(usersStore.userSelected$ | async) as userSelected" class="no-shadow">
+      <mat-card-header>
+          <img mat-card-avatar src="{{userSelected.avatar_url}}">
+          <mat-card-title>{{userSelected.login}}</mat-card-title>
+          <mat-card-subtitle>{{userSelected.type}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-content>
+          <ul>
+            <li>Score: {{userSelected.score}}</li>
+            <li>Admin: {{userSelected.site_admin}}</li>
+          </ul>
+        </mat-card-content>
+    </mat-card>
   </mat-sidenav>
 
   <mat-card *ngIf="(uiStateStore.uiState$ | async) as uiState" class="container">

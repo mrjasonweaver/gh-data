@@ -33,6 +33,14 @@ export class CurrentUserStore {
     return this.currentUser.pipe( map(user => user.login || this.localUserData ? true : false) );
   }
 
+  logoutCurrentUser(): void {
+    this.uiStateStore.startAction('Logging out user...', false);
+    localStorage.removeItem('ghdata-app-username');
+    this._currentUser.next(initialCurrentUser);
+    this.uiStateStore.endAction('User logged out', false);
+    this.router.navigate(['/login']);
+  }
+
   loadCurrentUser(un?: string): Subscription | void {
     this.uiStateStore.startAction('Retrieving user...', false);
     return this.localUserData ? this.loadUserFromLocalStorage(this.localUserData) : this.loadUserFromApi(un);
@@ -41,6 +49,7 @@ export class CurrentUserStore {
   loadUserFromLocalStorage(localUserData: ICurrentUser): void {
     this._currentUser.next(localUserData);
     this.uiStateStore.endAction('User retrieved', false);
+    this.router.navigate(['/dashboard']);
   }
 
   loadUserFromApi(un: string): Subscription {

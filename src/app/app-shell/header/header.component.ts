@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { UiStateStore } from '../../store/ui-state';
@@ -23,6 +23,10 @@ export class HeaderComponent implements OnInit {
     private router: Router
   ) {}
 
+  onValueChange(e: KeyboardEvent) {
+    return this.uiStateStore.onInputChange(e);
+  }
+
   ngOnInit() {
     this.uiStateStore.routeQueryParams$.subscribe(qp => this.routeQueryParams = qp);
     this.uiStateStore.inputValue$.subscribe(iv => {
@@ -42,5 +46,9 @@ export class HeaderComponent implements OnInit {
   onSearchChange(): Promise<boolean> {
     const { sort, order, page } = this.routeQueryParams.params;
     return this.router.navigate([`/${this.currentRoute}`], { queryParams: { sort, order, page, searchTerm: this.searchTerm } });
+  }
+
+  logout() {
+    return this.currentUserStore.logoutCurrentUser();
   }
 }
