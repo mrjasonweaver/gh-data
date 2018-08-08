@@ -27,6 +27,8 @@ import { LoginComponent } from './components/login/login.component';
 import { CurrentUserStore } from './store/currentUser';
 import { CurrentUserService } from './services/currentUser/currentUser.service';
 import { AuthGuard } from './services/authGuard/authGuard.service';
+import { PullRequestsService } from './services/pullrequests/pullrequests.service';
+import { PullRequestsStore } from './store/pullrequests';
 
 
 @NgModule({
@@ -109,7 +111,9 @@ import { AuthGuard } from './services/authGuard/authGuard.service';
     CacheService,
     CurrentUserStore,
     CurrentUserService,
-    AuthGuard
+    AuthGuard,
+    PullRequestsService,
+    PullRequestsStore
   ],
   bootstrap: [AppComponent]
 })

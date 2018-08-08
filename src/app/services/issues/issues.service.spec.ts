@@ -2,7 +2,7 @@ import { TestBed, inject, getTestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { IssuesService } from './issues.service';
-import { IIssuesObject, params, mockIssuesObject } from '../../models/issues';
+import { params, mockIssuesObject } from '../../models/issues';
 
 xdescribe('IssuesService', () => {
   let injector: TestBed;

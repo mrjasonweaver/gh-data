@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 
 import { IParams, params } from '../../models/issues';
 import { IssuesStore } from '../../store/issues';
+import { PullRequestsStore } from '../../store/pullrequests';
 import { CurrentUserStore } from '../../store/currentUser';
 
 @Component({
@@ -16,12 +17,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   constructor(
     public currentUserStore: CurrentUserStore,
-    public issuesStore: IssuesStore
+    public issuesStore: IssuesStore,
+    public pullRequestsStore: PullRequestsStore
   ) { }
 
   ngOnInit() {
     this.cuSub = this.currentUserStore.currentUser$.subscribe(user => this.currentUser = user.login);
-    this.loadUserData();
+    this.loadUserIssues();
+    this.loadUserPullRequests();
   }
 
   ngOnDestroy() {
@@ -35,8 +38,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
     };
   }
 
-  private loadUserData(): void | Subscription {
+  private loadUserIssues(): void | Subscription {
     return this.issuesStore.loadIssues(this.getParams());
+  }
+
+  private loadUserPullRequests(): void | Subscription {
+    return this.pullRequestsStore.loadPullRequests(this.getParams());
   }
 
 }

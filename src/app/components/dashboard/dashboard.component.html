@@ -69,7 +69,10 @@
         </mat-card-header>
         <mat-divider></mat-divider>
         <mat-card-content>
-          <div class="big-digits">5</div>
+            <div *ngIf="(pullRequestsStore.pullRequestsCount$ | async) as prsCount; else noprs" class="big-digits">
+                {{prsCount}}
+              </div>
+              <ng-template #noprs> <div class="big-digits">0</div> </ng-template>
         </mat-card-content>
       </mat-card>
     </div>
