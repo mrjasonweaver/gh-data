@@ -30,8 +30,8 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.pSub.unsubscribe();
   }
 
-  private navigate(): void {
-    this.pSub = this.uiStateStore.routeQueryParams$.subscribe(p => {
+  private navigate(): Subscription {
+    return this.pSub = this.uiStateStore.routeQueryParams$.subscribe(p => {
       this.routeQueryParams = p;
       const ap = {
         selected: p.get('selected') || params.selected,
@@ -41,25 +41,25 @@ export class UsersComponent implements OnInit, OnDestroy {
     });
   }
 
-  onPageChange(event) {
+  onPageChange(event): Promise<boolean> {
     const page = event.pageIndex + 1;
     const { sort, order, searchTerm } = this.routeQueryParams.params;
     return this.router.navigate(['/users'], { queryParams: { sort, order, page, searchTerm } });
   }
 
-  onSortData(event) {
+  onSortData(event): Promise<boolean> {
     const { active: sort, direction: order } = event;
     const { page, searchTerm } = this.routeQueryParams.params;
     return this.router.navigate(['/users'], { queryParams: { sort, order, page, searchTerm } });
   }
 
-  onSelect(value: string) {
+  onSelect(value: string): Promise<boolean> {
     const selected = value;
     const { sort, order, page, searchTerm } = this.routeQueryParams.params;
     return this.router.navigate(['/users'], { queryParams: { sort, order, page, searchTerm, selected } });
   }
 
-  onSidenavClose() {
+  onSidenavClose(): Promise<boolean> {
     const { sort, order, page, searchTerm } = this.routeQueryParams.params;
     return this.router.navigate(['/users'], { queryParams: { sort, order, page, searchTerm } });
   }

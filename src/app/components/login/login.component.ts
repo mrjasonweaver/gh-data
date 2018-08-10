@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  onValueChange(event) {
+  onValueChange(event): void {
     const username = event.target.value;
     this.currentUserStore.loadCurrentUser(username);
   }

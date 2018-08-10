@@ -13,7 +13,7 @@ export class DebounceObsInputComponent {
   @Input() inputLabel: string;
   @Input() searchTerm;
 
-  onValueChange(e: KeyboardEvent) {
-    return this.uiStateStore.onInputChange(e);
+  onValueChange(e: KeyboardEvent): void {
+    this.uiStateStore.onInputChange(e);
   }
 }

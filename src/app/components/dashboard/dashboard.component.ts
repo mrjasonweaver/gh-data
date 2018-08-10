@@ -38,12 +38,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
     };
   }
 
-  private loadUserIssues(): void | Subscription {
-    return this.issuesStore.loadIssues(this.getParams());
+  private loadUserIssues(): void {
+    this.issuesStore.loadIssues(this.getParams());
   }
 
-  private loadUserPullRequests(): void | Subscription {
-    return this.pullRequestsStore.loadPullRequests(this.getParams());
+  private loadUserPullRequests(): void {
+    this.pullRequestsStore.loadPullRequests(this.getParams());
   }
 
 }

@@ -31,7 +31,7 @@ export class PullRequestsStore {
   }
 
   loadPullRequests(p: IParams): Subscription | void {
-    this._key = makeKeyStr(p);
+    this._key = `pr${makeKeyStr(p)}`;
     this.uiStateStore.startAction('Retrieving Pull Requests...', false);
     return this.cache.validKey(this._key) ? this.loadCache() : this.loadApi(p);
   }

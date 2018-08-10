@@ -56,13 +56,13 @@ export class IssuesComponent implements OnInit, OnDestroy {
     });
   }
 
-  onPageChange(event, routeQueryParams) {
+  onPageChange(event, routeQueryParams): Promise<boolean> {
     const page = event.pageIndex + 1;
     const { sort, order, searchTerm } = routeQueryParams;
     return this.router.navigate(['/issues'], { queryParams: { sort, order, page, searchTerm } });
   }
 
-  onSortData(event, routeQueryParams) {
+  onSortData(event, routeQueryParams): Promise<boolean> {
     const { active: sort, direction: order } = event;
     const { page, searchTerm } = routeQueryParams;
     return this.router.navigate(['/issues'], { queryParams: { sort, order, page, searchTerm } });
